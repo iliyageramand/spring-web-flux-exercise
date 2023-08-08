@@ -1,6 +1,6 @@
 package com.example.springwebfluxexercise.dto.course;
 
-import com.example.springwebfluxexercise.domain.Person;
+import com.example.springwebfluxexercise.dto.person.PersonDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
@@ -18,5 +18,5 @@ public class CourseDto {
     private String title;
 
     @Valid
-    private Person instructor;
+    private PersonDto instructor;
 }
