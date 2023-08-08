@@ -2,7 +2,7 @@ package com.example.springwebfluxexercise.service;
 
 import com.example.springwebfluxexercise.domain.Person;
 import com.example.springwebfluxexercise.dto.course.CourseDto;
-import com.example.springwebfluxexercise.dto.course.GetCourseDto;
+import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
 import com.example.springwebfluxexercise.exception.NotFoundException;
 import com.example.springwebfluxexercise.mapper.CourseMapper;
 import com.example.springwebfluxexercise.mapper.PersonMapper;
@@ -21,30 +21,29 @@ public class CourseServiceImpl implements CourseService {
     private final PersonService personService;
 
     @Override
-    public Mono<CourseDto> save(CourseDto courseDto) {
+    public Mono<CourseDto> save(CreateOrUpdateCourseDto courseDto) {
         return courseRepository.save(courseMapper.toCourse(courseDto))
                 .map(courseMapper::toCourseDto);
     }
 
     @Override
-    public Mono<GetCourseDto> findById(Long id) {
+    public Mono<CourseDto> findById(Long id) {
         return courseRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
-                .map(courseMapper::toGetCourseDto)
-                .flatMap(courseDto ->
-                        personService.findById(courseDto.getInstructorId())
+                .flatMap(course ->
+                        personService.findById(course.getInstructorId())
                         .map(personMapper::toPerson)
-                        .zipWith(Mono.just(courseDto))
+                        .zipWith(Mono.just(course))
                         .flatMap(objects -> {
                             Person person = objects.getT1();
-                            GetCourseDto cDto = objects.getT2();
+                            CourseDto cDto = courseMapper.toCourseDto(objects.getT2());
                             cDto.setInstructor(person);
                             return Mono.just(cDto);
                         }));
     }
 
     @Override
-    public Mono<CourseDto> updateById(Long id, CourseDto courseDto) {
+    public Mono<CourseDto> updateById(Long id, CreateOrUpdateCourseDto courseDto) {
         return courseRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
                 .flatMap(course -> {

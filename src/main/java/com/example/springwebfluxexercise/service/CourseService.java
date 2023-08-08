@@ -1,14 +1,14 @@
 package com.example.springwebfluxexercise.service;
 
 import com.example.springwebfluxexercise.dto.course.CourseDto;
-import com.example.springwebfluxexercise.dto.course.GetCourseDto;
+import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
 import reactor.core.publisher.Mono;
 
 public interface CourseService {
 
-    Mono<CourseDto> save(CourseDto courseDto);
+    Mono<CourseDto> save(CreateOrUpdateCourseDto courseDto);
 
-    Mono<GetCourseDto> findById(Long id);
+    Mono<CourseDto> findById(Long id);
 
-    Mono<CourseDto> updateById(Long id, CourseDto courseDto);
+    Mono<CourseDto> updateById(Long id, CreateOrUpdateCourseDto courseDto);
 }

@@ -1,5 +1,6 @@
 package com.example.springwebfluxexercise.service;
 
+import com.example.springwebfluxexercise.dto.person.CreateOrUpdatePersonDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.exception.NotFoundException;
 import com.example.springwebfluxexercise.mapper.PersonMapper;
@@ -17,7 +18,7 @@ public class PersonServiceImpl implements PersonService {
     private final PersonMapper personMapper;
 
     @Override
-    public Mono<PersonDto> save(PersonDto personDto) {
+    public Mono<PersonDto> save(CreateOrUpdatePersonDto personDto) {
         return personRepository.save(personMapper.toPerson(personDto))
                 .map(personMapper::toPersonDto);
     }
@@ -31,7 +32,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public Mono<PersonDto> updateById(Long id, PersonDto personDto) {
+    public Mono<PersonDto> updateById(Long id, CreateOrUpdatePersonDto personDto) {
         return personRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
                 .flatMap(fetched -> {

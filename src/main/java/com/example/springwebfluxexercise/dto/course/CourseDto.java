@@ -1,29 +1,22 @@
 package com.example.springwebfluxexercise.dto.course;
 
-import com.example.springwebfluxexercise.dto.BaseEntityDto;
+import com.example.springwebfluxexercise.domain.Person;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Null;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class CourseDto extends BaseEntityDto {
-
-    @Null
-    private Long instructorId;
+public class CourseDto {
 
     @Max(50)
     private String title;
 
-    public CourseDto(@Null Long id, @Null Integer version, @Null Timestamp createdDate,
-                     @Null Timestamp lastModifiedDate, Long instructorId, String title) {
-        super(id, version, createdDate, lastModifiedDate);
-        this.instructorId = instructorId;
-        this.title = title;
-    }
+    @Valid
+    private Person instructor;
 }

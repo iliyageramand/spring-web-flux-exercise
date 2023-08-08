@@ -1,22 +1,21 @@
 package com.example.springwebfluxexercise.dto.person;
 
-import com.example.springwebfluxexercise.dto.BaseEntityDto;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class PersonDto extends BaseEntityDto {
+public class PersonDto {
 
     @Size(min = 10, max = 10)
     @NotNull
@@ -30,14 +29,4 @@ public class PersonDto extends BaseEntityDto {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthdate;
-
-    public PersonDto(@Null Long id, @Null Integer version, @Null Timestamp createdDate,
-                     @Null Timestamp lastModifiedDate, String nationalId, String firstName,
-                     String lastName, LocalDate birthdate) {
-        super(id, version, createdDate, lastModifiedDate);
-        this.nationalId = nationalId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthdate = birthdate;
-    }
 }

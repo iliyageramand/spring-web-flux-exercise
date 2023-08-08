@@ -1,7 +1,7 @@
 package com.example.springwebfluxexercise.controller;
 
+import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
 import com.example.springwebfluxexercise.dto.course.CourseDto;
-import com.example.springwebfluxexercise.dto.course.GetCourseDto;
 import com.example.springwebfluxexercise.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +21,18 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<CourseDto> save(@Valid @RequestBody CourseDto courseDto) {
+    public Mono<CourseDto> save(@Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
         return courseService.save(courseDto);
     }
 
     @GetMapping("/{id}")
-    public Mono<GetCourseDto> findById(@PathVariable Long id) {
+    public Mono<CourseDto> findById(@PathVariable Long id) {
         return courseService.findById(id);
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<CourseDto> updateById(@PathVariable Long id,
-                                      @Valid @RequestBody CourseDto courseDto) {
+                                                    @Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
         return courseService.updateById(id, courseDto);
     }
 }
