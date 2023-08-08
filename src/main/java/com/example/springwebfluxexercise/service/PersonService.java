@@ -1,6 +1,6 @@
 package com.example.springwebfluxexercise.service;
 
-import com.example.springwebfluxexercise.dto.PersonDto;
+import com.example.springwebfluxexercise.dto.person.PersonDto;
 import reactor.core.publisher.Mono;
 
 public interface PersonService {

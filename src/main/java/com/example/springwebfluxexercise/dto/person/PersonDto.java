@@ -1,4 +1,4 @@
-package com.example.springwebfluxexercise.dto;
+package com.example.springwebfluxexercise.dto.person;
 
 import com.example.springwebfluxexercise.dto.BaseEntityDto;
 import jakarta.validation.constraints.Max;
