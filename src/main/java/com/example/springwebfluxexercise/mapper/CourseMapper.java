@@ -10,10 +10,8 @@ import org.mapstruct.Mapping;
 public interface CourseMapper {
     Course toCourse(CourseDto courseDto);
 
-    Course toCourse(GetCourseDto courseDto);
-
     CourseDto toCourseDto(Course course);
 
-    @Mapping(target="instructor", source="")
+    @Mapping(target="instructor", ignore = true)
     GetCourseDto toGetCourseDto(Course course);
 }

@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImpl implements PersonService {
+    private static final String NOT_FOUND_MSG = "Person not found";
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
 
@@ -24,6 +25,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Mono<PersonDto> findById(Long id) {
         return personRepository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
                 .map(personMapper::toPersonDto);
     }
 
@@ -31,7 +33,7 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public Mono<PersonDto> updateById(Long id, PersonDto personDto) {
         return personRepository.findById(id)
-                .switchIfEmpty(Mono.error(new NotFoundException("Person not found")))
+                .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
                 .flatMap(fetched -> {
                     fetched.setNationalId(personDto.getNationalId());
                     fetched.setFirstName(personDto.getFirstName());
