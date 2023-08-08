@@ -8,6 +8,7 @@ import com.example.springwebfluxexercise.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -27,6 +28,12 @@ public class PersonServiceImpl implements PersonService {
     public Mono<PersonDto> findById(Long id) {
         return personRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
+                .map(personMapper::toPersonDto);
+    }
+
+    @Override
+    public Flux<PersonDto> findAll() {
+        return personRepository.findAll()
                 .map(personMapper::toPersonDto);
     }
 

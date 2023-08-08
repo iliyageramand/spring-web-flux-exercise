@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -28,6 +29,11 @@ public class CourseController {
     @GetMapping("/{id}")
     public Mono<CourseDto> findById(@PathVariable Long id) {
         return courseService.findById(id);
+    }
+
+    @GetMapping
+    public Flux<CourseDto> findAll() {
+        return courseService.findAll();
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
