@@ -1,10 +1,21 @@
-CREATE TABLE "person" (
-    "id" SERIAL PRIMARY KEY,
-    "version" INTEGER NOT NULL DEFAULT 0,
-    "created_date" TIMESTAMP NOT NULL,
+CREATE TABLE IF NOT EXISTS "person"
+(
+    "id"                 BIGSERIAL PRIMARY KEY,
+    "version"            INTEGER         NOT NULL DEFAULT 0,
+    "created_date"       TIMESTAMP       NOT NULL,
+    "last_modified_date" TIMESTAMP       NOT NULL,
+    "national_id"        CHAR(10) UNIQUE NOT NULL,
+    "first_name"         VARCHAR(50),
+    "last_name"          VARCHAR(50),
+    "birthdate"          DATE
+);
+
+CREATE TABLE IF NOT EXISTS "course"
+(
+    "id"                 BIGSERIAL PRIMARY KEY,
+    "version"            INTEGER   NOT NULL DEFAULT 0,
+    "created_date"       TIMESTAMP NOT NULL,
     "last_modified_date" TIMESTAMP NOT NULL,
-    "national_id" CHAR(10) UNIQUE NOT NULL,
-    "first_name" VARCHAR,
-    "last_name" VARCHAR,
-    "birthdate" DATE
+    "instructor_id"      BIGINT REFERENCES "person" (id),
+    "title"              VARCHAR(50)
 );

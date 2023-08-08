@@ -1,5 +1,6 @@
 package com.example.springwebfluxexercise.domain;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -26,12 +27,14 @@ public class Person extends BaseEntity {
     @Column
     @Size(min = 10, max = 10)
     @NotNull
-    private String nationalID;
+    private String nationalId;
 
     @Column
+    @Max(50)
     private String firstName;
 
     @Column
+    @Max(50)
     private String lastName;
 
     @Column
