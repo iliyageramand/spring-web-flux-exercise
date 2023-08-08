@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    container_name: spring-web-flux-exercise-db
+    restart: always
+    env_file:
+      postgres.env # includes POSTGRES_USER, POSTGRES_PASSWORD, and POSTGRES_DB
+    ports:
+      - "5436:5432"
+    volumes:
+      - spring-web-flux-exercise-db:/var/lib/postgresql/data
+    networks:
+      - spring-web-flux-exercise
+
+volumes:
+  spring-web-flux-exercise-db:
+     name: spring-web-flux-exercise-db
+
+networks:
+  spring-web-flux-exercise:
+     name: spring-web-flux-exercise
