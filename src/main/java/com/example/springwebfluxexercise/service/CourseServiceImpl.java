@@ -37,13 +37,23 @@ public class CourseServiceImpl implements CourseService {
                             CourseDto cDto = courseMapper.toCourseDto(objects.getT2());
                             cDto.setInstructor(personDto);
                             return Mono.just(cDto);
-                        }));
+                        })
+                );
     }
 
     @Override
     public Flux<CourseDto> findAll() {
         return courseRepository.findAll()
-                .map(courseMapper::toCourseDto);
+                .flatMap(course ->
+                        personService.findById(course.getInstructorId())
+                        .zipWith(Mono.just(course))
+                        .flatMap(objects -> {
+                            PersonDto personDto = objects.getT1();
+                            CourseDto cDto = courseMapper.toCourseDto(objects.getT2());
+                            cDto.setInstructor(personDto);
+                            return Mono.just(cDto);
+                        })
+                );
     }
 
     @Override
