@@ -2,6 +2,7 @@ package com.example.springwebfluxexercise.controller;
 
 import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
 import com.example.springwebfluxexercise.dto.course.CourseDto;
+import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,11 @@ public class CourseController {
     @GetMapping
     public Flux<CourseDto> findAll() {
         return courseService.findAll();
+    }
+
+    @GetMapping("/{id}/instructor")
+    public Mono<PersonDto> findInstructorByCourseId(@PathVariable Long id) {
+        return courseService.findInstructorByCourseId(id);
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

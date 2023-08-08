@@ -5,6 +5,7 @@ import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.exception.NotFoundException;
 import com.example.springwebfluxexercise.mapper.CourseMapper;
+import com.example.springwebfluxexercise.mapper.PersonMapper;
 import com.example.springwebfluxexercise.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class CourseServiceImpl implements CourseService {
     private static final String NOT_FOUND_MSG = "Course not found";
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    private final PersonMapper personMapper;
     private final PersonService personService;
 
     @Override
@@ -65,5 +67,11 @@ public class CourseServiceImpl implements CourseService {
                     return courseRepository.save(course);
                 })
                 .map(courseMapper::toCourseDto);
+    }
+
+    @Override
+    public Mono<PersonDto> findInstructorByCourseId(Long id) {
+        return courseRepository.findInstructorByCourseId(id)
+                .map(personMapper::toPersonDto);
     }
 }
