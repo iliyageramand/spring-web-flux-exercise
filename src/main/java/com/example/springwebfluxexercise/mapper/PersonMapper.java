@@ -11,5 +11,5 @@ public interface PersonMapper {
     @Mapping(target="age", ignore = true)
     Person toPerson(PersonDto personDto);
 
-    PersonDto toPersonCreateDto(Person person);
+    PersonDto toPersonDto(Person person);
 }
