@@ -1,7 +1,9 @@
 package com.example.springwebfluxexercise.controller;
 
+import com.example.springwebfluxexercise.dto.course.CourseDto;
 import com.example.springwebfluxexercise.dto.person.CreateOrUpdatePersonDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
+import com.example.springwebfluxexercise.service.PersonCourseService;
 import com.example.springwebfluxexercise.service.PersonService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class PersonController {
     private final PersonService personService;
+    private final PersonCourseService personCourseService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<PersonDto> save(@Valid @RequestBody CreateOrUpdatePersonDto personDto) {
@@ -34,6 +37,11 @@ public class PersonController {
     @GetMapping
     public Flux<PersonDto> findAll() {
         return personService.findAll();
+    }
+
+    @GetMapping("{id}/courses")
+    public Flux<CourseDto> findCoursesByPersonId(@PathVariable Long id) {
+        return personCourseService.findCoursesByPersonId(id);
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

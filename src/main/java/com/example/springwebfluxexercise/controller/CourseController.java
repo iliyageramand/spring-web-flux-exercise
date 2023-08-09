@@ -4,6 +4,7 @@ import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
 import com.example.springwebfluxexercise.dto.course.CourseDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.service.CourseService;
+import com.example.springwebfluxexercise.service.PersonCourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+    private final PersonCourseService personCourseService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<CourseDto> save(@Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
@@ -40,6 +42,11 @@ public class CourseController {
     @GetMapping("/{id}/instructor")
     public Mono<PersonDto> findInstructorByCourseId(@PathVariable Long id) {
         return courseService.findInstructorByCourseId(id);
+    }
+
+    @GetMapping("/{id}/students")
+    public Flux<PersonDto> findStudentsByCourseId(@PathVariable Long id) {
+        return personCourseService.findStudentsByCourseId(id);
     }
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
