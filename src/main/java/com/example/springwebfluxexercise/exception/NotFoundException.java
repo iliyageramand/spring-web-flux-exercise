@@ -1,10 +1,15 @@
 package com.example.springwebfluxexercise.exception;
 
-import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.ErrorResponseException;
 
-@NoArgsConstructor
-public class NotFoundException extends RuntimeException {
+public class NotFoundException extends ErrorResponseException {
     public NotFoundException(String message) {
-        super(message);
+        this(message, null);
+    }
+
+    public NotFoundException(String message, Throwable cause) {
+        super(HttpStatus.NOT_FOUND, ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, message), cause);
     }
 }
