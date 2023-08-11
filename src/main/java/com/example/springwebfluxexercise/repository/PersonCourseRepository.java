@@ -1,7 +1,6 @@
 package com.example.springwebfluxexercise.repository;
 
 import com.example.springwebfluxexercise.domain.PersonCourse;
-import com.example.springwebfluxexercise.dto.course.CourseDto;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
