@@ -13,4 +13,6 @@ public interface CourseRepository extends ReactiveCrudRepository<Course, Long> {
 
     @Query("SELECT * FROM person p JOIN course c on p.id = c.instructor_id WHERE c.id = :id")
     Mono<Person> findInstructorByCourseId(@Param("id") Long id);
+
+    Mono<Boolean> existsByTitleAndInstructorId(String title, Long instructorId);
 }

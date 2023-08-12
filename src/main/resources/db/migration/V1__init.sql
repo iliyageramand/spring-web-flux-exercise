@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS "course"
     "created_date"       TIMESTAMP NOT NULL,
     "last_modified_date" TIMESTAMP NOT NULL,
     "instructor_id"      BIGINT REFERENCES "person" (id),
-    "title"              VARCHAR(50)
+    "title"              VARCHAR(50),
+    UNIQUE ("instructor_id", "title")
 );
 
 CREATE TABLE IF NOT EXISTS "person_course"
