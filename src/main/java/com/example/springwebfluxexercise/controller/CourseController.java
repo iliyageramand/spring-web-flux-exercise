@@ -2,8 +2,9 @@ package com.example.springwebfluxexercise.controller;
 
 import com.example.springwebfluxexercise.dto.IdDto;
 import com.example.springwebfluxexercise.dto.PersonCourseDto;
-import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
+import com.example.springwebfluxexercise.dto.course.CreateCourseDto;
 import com.example.springwebfluxexercise.dto.course.CourseDto;
+import com.example.springwebfluxexercise.dto.course.UpdateCourseDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.service.CourseService;
 import com.example.springwebfluxexercise.service.PersonCourseService;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,7 +31,7 @@ public class CourseController {
     private final PersonCourseService personCourseService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<CourseDto> save(@Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
+    public Mono<CourseDto> save(@Valid @RequestBody CreateCourseDto courseDto) {
         return courseService.save(courseDto);
     }
 
@@ -53,9 +55,9 @@ public class CourseController {
         return personCourseService.findStudentsByCourseId(id);
     }
 
-    @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<CourseDto> updateById(@PathVariable Long id,
-                                      @Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
+                                      @Valid @RequestBody UpdateCourseDto courseDto) {
         return courseService.updateById(id, courseDto);
     }
 

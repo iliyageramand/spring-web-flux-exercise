@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateOrUpdateCourseDto {
+public class CreateCourseDto {
     private Long instructorId;
 
     @Size(max=50)

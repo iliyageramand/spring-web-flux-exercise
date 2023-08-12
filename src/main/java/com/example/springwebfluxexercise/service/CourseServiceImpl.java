@@ -1,7 +1,8 @@
 package com.example.springwebfluxexercise.service;
 
 import com.example.springwebfluxexercise.dto.course.CourseDto;
-import com.example.springwebfluxexercise.dto.course.CreateOrUpdateCourseDto;
+import com.example.springwebfluxexercise.dto.course.CreateCourseDto;
+import com.example.springwebfluxexercise.dto.course.UpdateCourseDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.exception.AlreadyExistsException;
 import com.example.springwebfluxexercise.exception.NotFoundException;
@@ -25,7 +26,7 @@ public class CourseServiceImpl implements CourseService {
     private final PersonService personService;
 
     @Override
-    public Mono<CourseDto> save(CreateOrUpdateCourseDto courseDto) {
+    public Mono<CourseDto> save(CreateCourseDto courseDto) {
         String title = courseDto.getTitle();
         Long instructorId = courseDto.getInstructorId();
 
@@ -85,14 +86,26 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Mono<CourseDto> updateById(Long id, CreateOrUpdateCourseDto courseDto) {
+    public Mono<CourseDto> updateById(Long id, UpdateCourseDto courseDto) {
+        Long instructorId = courseDto.getInstructorId();
         return courseRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
                 .flatMap(course -> {
                     course.setTitle(courseDto.getTitle());
-                    return courseRepository.save(course);
-                })
-                .map(courseMapper::toCourseDto);
+                    course.setInstructorId(instructorId);
+                    if (instructorId != null) {
+                        return personRepository.findById(instructorId)
+                                .switchIfEmpty(Mono.error(new NotFoundException("Person not found")))
+                                .flatMap(person -> courseRepository.save(course)
+                                        .map(c -> {
+                                            CourseDto dto = courseMapper.toCourseDto(c);
+                                            dto.setInstructor(personMapper.toPersonDto(person));
+                                            return dto;
+                                        }));
+                    }
+                    return courseRepository.save(course)
+                            .map(courseMapper::toCourseDto);
+                });
     }
 
     @Override
