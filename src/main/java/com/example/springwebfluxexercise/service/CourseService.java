@@ -15,5 +15,6 @@ public interface CourseService {
     Flux<CourseDto> findAll();
 
     Mono<CourseDto> updateById(Long id, CreateOrUpdateCourseDto courseDto);
+
     Mono<PersonDto> findInstructorByCourseId(Long id);
 }

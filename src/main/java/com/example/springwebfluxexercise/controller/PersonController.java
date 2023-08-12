@@ -1,5 +1,7 @@
 package com.example.springwebfluxexercise.controller;
 
+import com.example.springwebfluxexercise.dto.IdDto;
+import com.example.springwebfluxexercise.dto.PersonCourseDto;
 import com.example.springwebfluxexercise.dto.course.CourseDto;
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import com.example.springwebfluxexercise.dto.person.UpdatePersonDto;
@@ -51,5 +53,12 @@ public class PersonController {
     public Mono<PersonDto> updateById(@PathVariable Long id,
                                       @Valid @RequestBody UpdatePersonDto personDto) {
         return personService.updateById(id, personDto);
+    }
+
+    @PostMapping("/{id}/takeCourse")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<PersonCourseDto> takeCourse(@PathVariable Long id,
+                                            @Valid @RequestBody IdDto courseId) {
+        return personCourseService.takeCourse(id, courseId);
     }
 }
