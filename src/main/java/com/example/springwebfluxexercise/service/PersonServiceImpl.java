@@ -8,7 +8,6 @@ import com.example.springwebfluxexercise.mapper.PersonMapper;
 import com.example.springwebfluxexercise.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -48,7 +47,6 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional
     public Mono<PersonDto> updateById(Long id, UpdatePersonDto personDto) {
         return personRepository.findById(id)
                 .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
