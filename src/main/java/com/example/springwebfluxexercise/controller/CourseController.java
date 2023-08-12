@@ -51,7 +51,7 @@ public class CourseController {
 
     @PostMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<CourseDto> updateById(@PathVariable Long id,
-                                                    @Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
+                                      @Valid @RequestBody CreateOrUpdateCourseDto courseDto) {
         return courseService.updateById(id, courseDto);
     }
 }

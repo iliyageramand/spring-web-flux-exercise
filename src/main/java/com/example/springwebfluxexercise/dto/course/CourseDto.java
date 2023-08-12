@@ -2,19 +2,19 @@ package com.example.springwebfluxexercise.dto.course;
 
 import com.example.springwebfluxexercise.dto.person.PersonDto;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class CourseDto {
 
-    @Max(50)
+    @Size(max=50)
+    @NotBlank
     private String title;
 
     @Valid

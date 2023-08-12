@@ -1,29 +1,18 @@
 package com.example.springwebfluxexercise.dto.course;
 
-import com.example.springwebfluxexercise.dto.BaseEntityDto;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Null;
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.sql.Timestamp;
-
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-public class CreateOrUpdateCourseDto extends BaseEntityDto {
-
-    @Null
+@AllArgsConstructor
+public class CreateOrUpdateCourseDto {
     private Long instructorId;
 
-    @Max(50)
+    @Size(max=50)
+    @NotBlank
     private String title;
-
-    public CreateOrUpdateCourseDto(@Null Long id, @Null Integer version, @Null Timestamp createdDate,
-                                   @Null Timestamp lastModifiedDate, Long instructorId, String title) {
-        super(id, version, createdDate, lastModifiedDate);
-        this.instructorId = instructorId;
-        this.title = title;
-    }
 }
