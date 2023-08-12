@@ -1,6 +1,5 @@
 package com.example.springwebfluxexercise.dto.course;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +12,5 @@ public class UpdateCourseDto {
     private Long instructorId;
 
     @Size(max=50)
-    @NotBlank
     private String title;
 }

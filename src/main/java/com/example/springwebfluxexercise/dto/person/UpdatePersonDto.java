@@ -1,6 +1,5 @@
 package com.example.springwebfluxexercise.dto.person;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +13,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UpdatePersonDto {
     @Size(max=50)
-    @NotBlank
     private String firstName;
 
     @Size(max=50)
-    @NotBlank
     private String lastName;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)

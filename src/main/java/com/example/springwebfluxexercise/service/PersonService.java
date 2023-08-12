@@ -14,4 +14,5 @@ public interface PersonService {
     Flux<PersonDto> findAll();
 
     Mono<PersonDto> updateById(Long id, UpdatePersonDto personDto);
+    Mono<PersonDto> partialUpdateById(Long id, UpdatePersonDto personDto);
 }

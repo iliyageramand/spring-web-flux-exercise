@@ -21,11 +21,9 @@ public class PersonDto {
     private String nationalId;
 
     @Size(max=50)
-    @NotBlank
     private String firstName;
 
     @Size(max=50)
-    @NotBlank
     private String lastName;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

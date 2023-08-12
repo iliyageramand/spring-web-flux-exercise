@@ -58,4 +58,20 @@ public class PersonServiceImpl implements PersonService {
                 })
                 .map(personMapper::toPersonDto);
     }
+
+    @Override
+    public Mono<PersonDto> partialUpdateById(Long id, UpdatePersonDto personDto) {
+        return personRepository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException(NOT_FOUND_MSG)))
+                .flatMap(fetched -> {
+                    if (personDto.getFirstName() != null)
+                        fetched.setFirstName(personDto.getFirstName());
+                    if (personDto.getLastName() != null)
+                        fetched.setLastName(personDto.getLastName());
+                    if (personDto.getBirthdate() != null)
+                        fetched.setBirthdate(personDto.getBirthdate());
+                    return personRepository.save(fetched);
+                })
+                .map(personMapper::toPersonDto);
+    }
 }
